@@ -2,27 +2,22 @@
   <v-main v-if="!loading">
     <v-container fluid class="pt-0">
       <v-row>
-        <v-carousel
-            height="400px"
-            cycle
-            progress
-            hide-delimiters
-            :interval="5000"
-            show-arrows-on-hover
+        <v-card
+            class="mt-12 mx-auto"
+            max-width="600"
         >
-          <v-carousel-item
-              v-for="ad in promoAds"
-              :key="ad.id"
-              :src="ad.imageSrc"
-              transition="scroll-x-reverse-transition"
+          <v-img
+              class="white--text align-end"
+              height="400px"
+              src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
           >
-            <div class="car-link">
-              <v-btn class="warning" :to="'/ad/' + ad.id">
-                {{ad.title}}
-              </v-btn>
-            </div>
-          </v-carousel-item>
-        </v-carousel>
+            <v-card-title>HELLO, WORLD</v-card-title>
+          </v-img>
+
+          <v-card-text class="text--primary">
+            <div>This is test page</div>
+          </v-card-text>
+        </v-card>
       </v-row>
     </v-container>
 

@@ -14,13 +14,14 @@ new Vue({
   created () {
     fb.initializeApp({
       // config firebase
-      apiKey: "AIzaSyC2Uvidr8XvmbRNQK3aMYLKAqD1exez81g",
-      authDomain: "itc-ads-6108a.firebaseapp.com",
-      databaseURL: "https://itc-ads-6108a.firebaseio.com",
-      projectId: "itc-ads-6108a",
-      storageBucket: "itc-ads-6108a.appspot.com",
-      messagingSenderId: "449575624094",
-      appId: "1:449575624094:web:20ba93c89f063bbb370a8f"
+      apiKey: "AIzaSyCMO2S3XiDWYhDywG5kDCCkuKtgmH4irsc",
+      authDomain: "takeoff-e88a0.firebaseapp.com",
+      databaseURL: "https://takeoff-e88a0.firebaseio.com",
+      projectId: "takeoff-e88a0",
+      storageBucket: "takeoff-e88a0.appspot.com",
+      messagingSenderId: "216533919772",
+      appId: "1:216533919772:web:813415ba66546f572797d9",
+      measurementId: "G-K6QBYSYM59"
     });
 
     fb.auth().onAuthStateChanged(user => {
