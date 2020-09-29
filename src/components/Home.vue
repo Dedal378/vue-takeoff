@@ -95,13 +95,5 @@
 </script>
 
 <style scoped>
-  .car-link {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    background: rgba(25, 118, 210, 0.5);
-    transform: translate(-50%, 70%);
-    padding: 5px 15px;
-    border-radius: 5px;
-  }
+
 </style>

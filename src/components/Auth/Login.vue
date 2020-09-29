@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-main>
     <v-container fluid>
       <v-row
           align="center"
@@ -59,7 +59,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-content>
+  </v-main>
 </template>
 
 <script>
@@ -94,7 +94,7 @@
 
           this.$store.dispatch('loginUser', user)
             .then(() => {
-              this.$router.push('/')
+              this.$router.push('/list')
             })
             .catch(() => {
             })

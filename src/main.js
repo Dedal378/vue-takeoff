@@ -2,7 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import * as fb from 'firebase'
+import * as fb from 'firebase/app'
+import 'firebase/auth'
 import vuetify from './plugins/vuetify'
 
 Vue.config.productionTip = false
@@ -29,8 +30,7 @@ new Vue({
         this.$store.dispatch('autoLoginUser', user)
       }
     });
-
-    this.$store.dispatch('fetchAds')
+    this.$store.dispatch('fetchUsersList')
   },
   render: h => h(App)
 }).$mount('#app')

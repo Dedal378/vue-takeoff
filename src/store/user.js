@@ -11,43 +11,43 @@ export default {
     user: null
   },
   mutations: {
-    setUser (state, payload) {
-      state.user = payload;
+    SET_USER (state, data) {
+      state.user = data;
     }
   },
   actions: {
-    async registerUser ({commit}, {email, password}) {
-      commit('clearError');
-      commit('setLoading', true);
+    async registerUser ({ commit }, { email, password }) {
+      commit('CLEAR_ERROR');
+      commit('SET_LOADING', true);
       try {
         const user = await fb.auth().createUserWithEmailAndPassword(email, password);
-        commit('setUser', new User(user.user.uid));
-        commit('setLoading', false)
+        commit('SET_USER', new User(user.user.uid));
+        commit('SET_LOADING', false)
       } catch (error) {
-          commit('setLoading', false);
-          commit('setError', error.message);
+        commit('SET_LOADING', false);
+        commit('SET_ERROR', error.message);
         throw error
       }
     },
-    async loginUser ({commit}, {email, password}) {
-      commit('clearError');
-      commit('setLoading', true);
+    async loginUser ({ commit }, { email, password }) {
+      commit('CLEAR_ERROR');
+      commit('SET_LOADING', true);
       try {
         const user = await fb.auth().signInWithEmailAndPassword(email, password);
-        commit('setUser', new User(user.user.uid));
-        commit('setLoading', false)
+        commit('SET_USER', new User(user.user.uid));
+        commit('SET_LOADING', false)
       } catch (error) {
-          commit('setLoading', false);
-          commit('setError', error.message);
+        commit('SET_LOADING', false);
+        commit('SET_ERROR', error.message);
         throw error
       }
     },
-    autoLoginUser ({commit}, payload) {
-      commit('setUser', new User(payload.uid))
+    autoLoginUser ({ commit }, data) {
+      commit('SET_USER', new User(data.uid))
     },
-    logoutUser ({commit}) {
+    logoutUser ({ commit }) {
       fb.auth().signOut();
-      commit('setUser', null)
+      commit('SET_USER', null)
     }
   },
   getters: {

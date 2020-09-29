@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import AuthGuard from './auth-guard';
+import AuthGuard from './auth-guard';
 import Home from "@/components/Home";
 import Login from "@/components/Auth/Login";
 import Registration from "@/components/Auth/Registration";
+import List from "@/components/List";
 
 
 Vue.use(VueRouter);
@@ -14,12 +15,12 @@ const routes = [
     name: 'home',
     component: Home
   },
-/*  {
+  {
     path: '/list',
     name: 'list',
-    component: AdList,
+    component: List,
     beforeEnter: AuthGuard
-  },*/
+  },
   {
     path: '/login',
     name: 'login',

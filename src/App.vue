@@ -12,7 +12,7 @@
             v-for="link of links"
         >
           <v-list-item-action>
-            <v-icon>{{link.icon}}</v-icon>
+            <v-icon>{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title v-text="link.title" />
@@ -59,8 +59,8 @@
             height="100%"
             v-for="link of links"
         >
-          <v-icon left>{{link.icon}}</v-icon>
-          {{link.title}}
+          <v-icon left>{{ link.icon }}</v-icon>
+          {{ link.title }}
         </v-btn>
         <v-btn
             text
@@ -83,7 +83,7 @@
           color="error"
           multi-line
       >
-        {{error}}
+        {{ error }}
         <v-btn
             @click="closeError"
             dark
@@ -119,14 +119,12 @@ export default {
     links () {
       if (this.isUserLoggedIn) {
         return [
-          {title: 'Orders', icon: 'mdi-bookmark-outline', url: '/orders'},
-          {title: 'New ad', icon: 'mdi-file-plus', url: '/new'},
-          {title: 'My ads', icon: 'mdi-format-list-bulleted', url: '/list'}
+          { title: 'List', icon: 'mdi-format-list-bulleted', url: '/list' }
         ]
       }
       return [
-        {title: 'Login', icon: 'mdi-lock', url: '/login'},
-        {title: 'Registration', icon: 'mdi-face', url: '/registration'}
+        { title: 'Login', icon: 'mdi-lock', url: '/login' },
+        { title: 'Registration', icon: 'mdi-face', url: '/registration' }
       ]
     }
   },

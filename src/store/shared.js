@@ -4,32 +4,26 @@ export default {
     error: null,
   },
   mutations: {
-    setLoading (state, payload) {
-      state.loading = payload
+    SET_LOADING (state, data) {
+      state.loading = data
     },
-
-    setError (state, payload) {
-      state.error = payload
+    SET_ERROR (state, data) {
+      state.error = data
     },
-
-    clearError (state) {
+    CLEAR_ERROR (state) {
       state.error = null
     },
-
   },
   actions: {
-    setLoading ({commit}, payload) {
-      commit('setLoading', payload)
+    setLoading ({commit}, data) {
+      commit('SET_LOADING', data)
     },
-
-    setError ({commit}, payload) {
-      commit('setError', payload)
+    setError ({commit}, data) {
+      commit('SET_ERROR', data)
     },
-
     clearError ({commit}) {
-      commit('clearError')
+      commit('CLEAR_ERROR')
     },
-
   },
   getters: {
     loading (state) {
@@ -37,6 +31,6 @@ export default {
     },
     error (state) {
       return state.error
-    }
+    },
   }
 }
