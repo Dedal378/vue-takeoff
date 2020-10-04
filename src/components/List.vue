@@ -6,60 +6,91 @@
           justify="center">
         <v-col sm="10" md="8" lg="7">
           <h1 class="text--secondary mb-3">Users List</h1>
-          <v-autocomplete
-              v-model="model"
-              :items="usersList"
-              :loading="isLoading"
-              :search-input.sync="search"
-              chips
+
+          <v-text-field
+              v-model="search"
               clearable
+              flat
+              solo-inverted
               hide-details
-              hide-selected
-              item-text="name"
-              item-value="symbol"
-              label="Search..."
-              solo
-          >
-            <template v-slot:no-data>
-              <v-list-item>
-                <v-list-item-title>
-                  Search user for
-                  <strong>name</strong>
-                </v-list-item-title>
-              </v-list-item>
-            </template>
-            <template v-slot:selection="{ attr, on, item, selected }">
-              <v-chip
-                  v-bind="attr"
-                  :input-value="selected"
-                  color="blue-grey"
-                  class="white--text"
-                  v-on="on"
+              prepend-inner-icon="search"
+              label="Search for..."
+          ></v-text-field>
+
+          <v-card>
+            <v-container fluid>
+              <v-row
+                  align="center"
               >
-                <v-icon left>
-                  mdi-bitcoin
-                </v-icon>
-                <span v-text="item.name"></span>
-              </v-chip>
-            </template>
-            <template v-slot:item="{ item }">
-              <v-list-item-avatar
-                  color="indigo"
-                  class="headline font-weight-light white--text"
-              >
-                {{ item.name.charAt(0) }}
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.name"></v-list-item-title>
-                <v-list-item-subtitle v-text="item.symbol"></v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-action>
-                <v-icon>mdi-bitcoin</v-icon>
-              </v-list-item-action>
-            </template>
-          </v-autocomplete>
+                <v-col
+                    cols="12"
+                >
+                  <v-select
+                      v-model="value"
+                      :items="items"
+                      :filter="filterName"
+                      chips
+                      label="select items for search"
+                      multiple
+                      outlined
+                  ></v-select>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
         </v-col>
       </v-row>
+
+      <v-form v-model="valid">
+        <v-container>
+          <v-row>
+            <v-col
+                cols="12"
+                md="4"
+            >
+              <v-text-field
+                  v-model="firstname"
+                  :rules="nameRules"
+                  :counter="10"
+                  label="First name"
+                  required
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+                cols="12"
+                md="4"
+            >
+              <v-text-field
+                  v-model="lastname"
+                  :rules="nameRules"
+                  :counter="10"
+                  label="Last name"
+                  required
+              ></v-text-field>
+            </v-col>
+
+            <v-col
+                cols="12"
+                md="4"
+            >
+              <v-text-field
+                  v-model="email"
+                  :rules="emailRules"
+                  label="E-mail"
+                  required
+              ></v-text-field>
+
+              <v-btn
+                  class="mr-4"
+                  @click="submit"
+              >
+                submit
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
 
       <v-card
           :elevation="7"
@@ -67,7 +98,7 @@
       >
         <v-list three-line>
           <template
-              v-for="(userList) of usersList"
+              v-for="(userList) of filteredUsersList"
           >
             <v-list-item
                 :key="userList.id"
@@ -124,40 +155,55 @@
 import { mapGetters } from "vuex";
 
 export default {
-  data: () => ({
-    isLoading: false,
-    items: [],
-    model: null,
-    search: null,
-    tab: null,
-  }),
+  data () {
+    return {
+      search: '',
+      filter: '',
+      items: [],
+      value: [],
+      valid: false,
+      firstname: '',
+      lastname: '',
+      email: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => v.length <= 10 || 'Name must be less than 10 characters',
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+    }
+  },
+  methods: {
+    submit () {
 
-  watch: {
-    model (val) {
-      if (val != null) this.tab = 0
-      else this.tab = null
     },
-    // eslint-disable-next-line no-unused-vars
-    search (val) {
-      // Items have already been loaded
-      if (this.items.length > 0) return
-
-      this.isLoading = true
-
-      // Lazily load input items
-      fetch('https://api.coingecko.com/api/v3/coins/list')
-          .then(res => res.clone().json())
-          .then(res => {
-            this.items = res
-          })
-          .catch(err => {
-            console.log(err)
-          })
-          .finally(() => (this.isLoading = false))
+    clear () {
+      this.firstname = ''
+      this.lastname = ''
+      this.email = ''
     },
   },
   computed: {
-    ...mapGetters(['usersList', 'loading']),
+    ...mapGetters(['usersList', 'filteredUsersList']),
+    filteredUsersList () {
+      let searchToLowerCase = this.search.toLowerCase()
+      return this.$store.getters.usersList.filter(userList => {
+        return userList.name.toLowerCase().indexOf(searchToLowerCase) > -1
+            || userList.email.toLowerCase().indexOf(searchToLowerCase) > -1
+            || userList.company.name.toLowerCase().indexOf(searchToLowerCase) > -1
+            || userList.address.city.toLowerCase().indexOf(searchToLowerCase) > -1
+            || userList.website.toLowerCase().indexOf(searchToLowerCase) > -1
+      })
+    },
+    filterName () {
+      return this.usersList.slice(0, 1).map((obj) => {
+        for (const key in obj) {
+          this.items.push(key)
+        }
+      })
+    }
   },
 }
 </script>
