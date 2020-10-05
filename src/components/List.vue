@@ -51,7 +51,7 @@
               <v-text-field
                   v-model="firstname"
                   :rules="nameRules"
-                  :counter="10"
+                  :counter="0"
                   label="First name"
                   required
               ></v-text-field>
@@ -64,7 +64,7 @@
               <v-text-field
                   v-model="lastname"
                   :rules="nameRules"
-                  :counter="10"
+                  :counter="0"
                   label="Last name"
                   required
               ></v-text-field>
@@ -167,7 +167,7 @@ export default {
       email: '',
       nameRules: [
         v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
+        v => v.length >= 2 || 'Name must be less than 2 characters',
       ],
       emailRules: [
         v => !!v || 'E-mail is required',
@@ -203,7 +203,16 @@ export default {
           this.items.push(key)
         }
       })
-    }
+    },
+    // eslint-disable-next-line vue/no-dupe-keys
+    firstname: {
+      get () {
+        return this.$store.state.firstname
+      },
+      set (value) {
+        this.$store.commit('', value)
+      }
+    },
   },
 }
 </script>
