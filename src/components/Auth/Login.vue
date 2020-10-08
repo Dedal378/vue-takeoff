@@ -96,8 +96,6 @@
             .then(() => {
               this.$router.push('/list')
             })
-            .catch(() => {
-            })
         }
       },
     },

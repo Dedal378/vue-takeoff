@@ -5,7 +5,7 @@
           align-content="center"
           justify="center">
         <v-col sm="10" md="8" lg="7">
-          <h1 class="text--secondary mb-3">Users List</h1>
+          <h2 class="text--secondary mb-3">Find users in list</h2>
 
           <v-text-field
               v-model="search"
@@ -14,35 +14,45 @@
               solo-inverted
               hide-details
               prepend-inner-icon="search"
-              label="Search for..."
+              label="Search users..."
           ></v-text-field>
 
-          <v-card>
-            <v-container fluid>
-              <v-row
-                  align="center"
-              >
-                <v-col
-                    cols="12"
-                >
-                  <v-select
-                      v-model="value"
-                      :items="items"
-                      :filter="filterName"
-                      chips
-                      label="select items for search"
-                      multiple
-                      outlined
-                  ></v-select>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card>
+          <!--          <v-card>
+                      <v-container fluid>
+                        <v-row
+                            align="center"
+                        >
+                          <v-col
+                              cols="12"
+                          >
+                            <v-select
+                                v-model="value"
+                                :items="items"
+                                :filter="filterName"
+                                chips
+                                label="Select items for search..."
+                                multiple
+                                outlined
+                            ></v-select>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-card>-->
         </v-col>
       </v-row>
 
-      <v-form v-model="valid">
+      <v-divider
+          class="mt-12"
+      />
+      <v-form
+          ref="formAddUser"
+          v-model="valid"
+          lazy-validation
+      >
         <v-container>
+          <v-col>
+            <h2 class="text--secondary">Add new user</h2>
+          </v-col>
           <v-row>
             <v-col
                 cols="12"
@@ -53,6 +63,7 @@
                   :rules="nameRules"
                   :counter="0"
                   label="First name"
+                  solo-inverted
                   required
               ></v-text-field>
             </v-col>
@@ -66,6 +77,7 @@
                   :rules="nameRules"
                   :counter="0"
                   label="Last name"
+                  solo-inverted
                   required
               ></v-text-field>
             </v-col>
@@ -78,11 +90,16 @@
                   v-model="email"
                   :rules="emailRules"
                   label="E-mail"
+                  solo-inverted
                   required
               ></v-text-field>
+            </v-col>
 
+            <v-col
+                class="d-flex justify-end"
+            >
               <v-btn
-                  class="mr-4"
+                  x-large
                   @click="submit"
               >
                 submit
@@ -94,11 +111,11 @@
 
       <v-card
           :elevation="7"
-          class="pa-12 ma-6"
+          class="pa-12 ma-10"
       >
         <v-list three-line>
           <template
-              v-for="(userList) of filteredUsersList"
+              v-for="userList of filteredUsersList"
           >
             <v-list-item
                 :key="userList.id"
@@ -108,42 +125,107 @@
               >
                 <v-list-item-title class="font-weight-bold text-h4 mb-2" v-html="userList.name"></v-list-item-title>
                 <v-list-item-subtitle class="font-weight-medium mb-2" v-html="userList.email"></v-list-item-subtitle>
-                <v-list-item-content>
-                  <v-list-item-title class="font-weight-medium mb-2">Address</v-list-item-title>
-                  <v-list-item-subtitle v-html="userList.address.zipcode"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-html="userList.address.city"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-html="userList.address.street"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-html="userList.address.suite"></v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-content>
-                  <v-list-item-title class="font-weight-medium mb-2">Geo</v-list-item-title>
-                  <v-list-item-subtitle v-html="userList.address.geo.lat"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-html="userList.address.geo.lng"></v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-content>
-                  <v-list-item-title class="font-weight-medium mb-2">Phone</v-list-item-title>
-                  <v-list-item-subtitle v-html="userList.phone"></v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-content>
-                  <v-list-item-title class="font-weight-medium mb-2">Website</v-list-item-title>
-                  <v-list-item-subtitle>
-                    <a href="#" target="_blank">{{ userList.website }}</a>
-                  </v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-content>
-                  <v-list-item-title class="font-weight-medium mb-2">Company</v-list-item-title>
-                  <v-list-item-subtitle v-html="userList.company.name"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-html="userList.company.catchPhrase"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-html="userList.company.bs"></v-list-item-subtitle>
-                </v-list-item-content>
+                <!--                <v-list-item-content>
+                                  <v-list-item-title class="font-weight-medium mb-2">Address</v-list-item-title>
+                                  <v-list-item-subtitle v-html="userList.address.zipcode"></v-list-item-subtitle>
+                                  <v-list-item-subtitle v-html="userList.address.city"></v-list-item-subtitle>
+                                  <v-list-item-subtitle v-html="userList.address.street"></v-list-item-subtitle>
+                                  <v-list-item-subtitle v-html="userList.address.suite"></v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-content>
+                                  <v-list-item-title class="font-weight-medium mb-2">Geo</v-list-item-title>
+                                  <v-list-item-subtitle v-html="userList.address.geo.lat"></v-list-item-subtitle>
+                                  <v-list-item-subtitle v-html="userList.address.geo.lng"></v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-content>
+                                  <v-list-item-title class="font-weight-medium mb-2">Phone</v-list-item-title>
+                                  <v-list-item-subtitle v-html="userList.phone"></v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-content>
+                                  <v-list-item-title class="font-weight-medium mb-2">Website</v-list-item-title>
+                                  <v-list-item-subtitle>
+                                    <a href="#" target="_blank">{{ userList.website }}</a>
+                                  </v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-list-item-content>
+                                  <v-list-item-title class="font-weight-medium mb-2">Company</v-list-item-title>
+                                  <v-list-item-subtitle v-html="userList.company.name"></v-list-item-subtitle>
+                                  <v-list-item-subtitle v-html="userList.company.catchPhrase"></v-list-item-subtitle>
+                                  <v-list-item-subtitle v-html="userList.company.bs"></v-list-item-subtitle>
+                                </v-list-item-content>-->
+                <v-col>
+                  <v-btn
+                      tile
+                      color="success"
+                      class="mr-3"
+                      @click="editUser"
+                  >
+                    <v-icon left>
+                      mdi-pencil
+                    </v-icon>
+                    Edit
+                  </v-btn>
 
-                <v-divider
-                    inset
-                    class="mt-6"
-                ></v-divider>
+                  <v-btn
+                      tile
+                      color="warning"
+                      class="mr-3"
+                      @click="saveUser"
+                  >
+                    <v-icon left>
+                      mdi-file-check-outline
+                    </v-icon>
+                    Save
+                  </v-btn>
+
+                  <v-btn
+                      tile
+                      color="error"
+                      @click="deleteUser"
+                  >
+                    <v-icon left>
+                      mdi-delete-off-outline
+                    </v-icon>
+                    Delete
+                  </v-btn>
+
+                  <v-col
+                      class="mt-5"
+                  >
+                    <v-text-field
+                        v-if="showEditInput"
+                        v-model="firstname"
+                        :rules="nameRules"
+                        label="Firstname"
+                        solo-inverted
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        v-if="showEditInput"
+                        v-model="lastname"
+                        :rules="nameRules"
+                        label="Lastname"
+                        solo-inverted
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        v-if="showEditInput"
+                        v-model="email"
+                        :rules="emailRules"
+                        label="E-mail"
+                        solo-inverted
+                        required
+                    ></v-text-field>
+                  </v-col>
+                </v-col>
               </v-list-item-content>
               <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"></v-parallax>
             </v-list-item>
+            <v-divider
+                inset
+                class="ma-6"
+                :key="userList.id"
+            ></v-divider>
           </template>
         </v-list>
       </v-card>
@@ -152,12 +234,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   data () {
     return {
-      search: '',
       filter: '',
       items: [],
       value: [],
@@ -173,28 +254,46 @@ export default {
         v => !!v || 'E-mail is required',
         v => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
+      showEditInput: false,
     }
   },
   methods: {
+    ...mapActions(['addUserInList']),
     submit () {
+      if (this.$refs.formAddUser.validate()) {
+        const addUser = {
+          name: `${ this.firstname }  ${ this.lastname }`,
+          email: this.email,
+        };
+        this.addUserInList(addUser)
+
+        this.firstname = ''
+        this.lastname = ''
+        this.email = ''
+      }
+    },
+    editUser () {
+      this.showEditInput = !this.showEditInput
 
     },
-    clear () {
-      this.firstname = ''
-      this.lastname = ''
-      this.email = ''
+    saveUser () {
+
+    },
+    deleteUser (deletedUser) {
+      this.filteredUsersList = this.filteredUsersList.filter((filteredUser) => {filteredUser !== deletedUser})
     },
   },
   computed: {
-    ...mapGetters(['usersList', 'filteredUsersList']),
+    ...mapState(['search']),
+    ...mapGetters(['usersList', 'search']),
     filteredUsersList () {
       let searchToLowerCase = this.search.toLowerCase()
-      return this.$store.getters.usersList.filter(userList => {
+      return this.usersList.filter(userList => {
         return userList.name.toLowerCase().indexOf(searchToLowerCase) > -1
             || userList.email.toLowerCase().indexOf(searchToLowerCase) > -1
-            || userList.company.name.toLowerCase().indexOf(searchToLowerCase) > -1
-            || userList.address.city.toLowerCase().indexOf(searchToLowerCase) > -1
-            || userList.website.toLowerCase().indexOf(searchToLowerCase) > -1
+        // || userList.company.name.toLowerCase().indexOf(searchToLowerCase) > -1
+        // || userList.address.city.toLowerCase().indexOf(searchToLowerCase) > -1
+        // || userList.website.toLowerCase().indexOf(searchToLowerCase) > -1
       })
     },
     filterName () {
@@ -205,7 +304,7 @@ export default {
       })
     },
     // eslint-disable-next-line vue/no-dupe-keys
-    firstname: {
+    firstnameL: {
       get () {
         return this.$store.state.firstname
       },
