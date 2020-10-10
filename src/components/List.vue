@@ -3,7 +3,8 @@
     <v-container fluid>
       <v-row
           align-content="center"
-          justify="center">
+          justify="center"
+      >
         <v-col sm="10" md="8" lg="7">
           <h2 class="text--secondary mb-3">Find users in list</h2>
 
@@ -119,12 +120,13 @@
           >
             <v-list-item
                 :key="userList.id"
+                class="pa-6 ma-3 elevation-5"
             >
               <v-list-item-content
-                  class="pa-6 ma-3"
               >
-                <v-list-item-title class="font-weight-bold text-h4 mb-2" v-html="userList.name"></v-list-item-title>
-                <v-list-item-subtitle class="font-weight-medium mb-2" v-html="userList.email"></v-list-item-subtitle>
+                <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
+                  <v-list-item-title class="font-weight-bold text-h4 mt-16 py-12" v-html="userList.name"></v-list-item-title>
+                  <v-list-item-subtitle class="font-weight-medium mb-2" v-html="userList.email"></v-list-item-subtitle>
                 <!--                <v-list-item-content>
                                   <v-list-item-title class="font-weight-medium mb-2">Address</v-list-item-title>
                                   <v-list-item-subtitle v-html="userList.address.zipcode"></v-list-item-subtitle>
@@ -153,6 +155,7 @@
                                   <v-list-item-subtitle v-html="userList.company.catchPhrase"></v-list-item-subtitle>
                                   <v-list-item-subtitle v-html="userList.company.bs"></v-list-item-subtitle>
                                 </v-list-item-content>-->
+                </v-parallax>
                 <v-col>
                   <v-btn
                       tile
@@ -189,43 +192,41 @@
                     Delete
                   </v-btn>
 
-                  <v-col
-                      class="mt-5"
-                  >
-                    <v-text-field
-                        v-if="showEditInput"
-                        v-model="firstname"
-                        :rules="nameRules"
-                        label="Firstname"
-                        solo-inverted
-                        required
-                    ></v-text-field>
-                    <v-text-field
-                        v-if="showEditInput"
-                        v-model="lastname"
-                        :rules="nameRules"
-                        label="Lastname"
-                        solo-inverted
-                        required
-                    ></v-text-field>
-                    <v-text-field
-                        v-if="showEditInput"
-                        v-model="email"
-                        :rules="emailRules"
-                        label="E-mail"
-                        solo-inverted
-                        required
-                    ></v-text-field>
-                  </v-col>
                 </v-col>
+                <!--<v-col
+                    class="mt-5"
+                >
+                  <v-text-field
+                      v-if="showEditInput"
+                      v-model="firstname"
+                      :rules="nameRules"
+                      label="Firstname"
+                      solo-inverted
+                      required
+                  ></v-text-field>
+                  <v-text-field
+                      v-if="showEditInput"
+                      v-model="lastname"
+                      :rules="nameRules"
+                      label="Lastname"
+                      solo-inverted
+                      required
+                  ></v-text-field>
+                  <v-text-field
+                      v-if="showEditInput"
+                      v-model="email"
+                      :rules="emailRules"
+                      label="E-mail"
+                      solo-inverted
+                      required
+                  ></v-text-field>
+                </v-col>-->
+                <v-divider
+                    inset
+                    class="ma-6"
+                ></v-divider>
               </v-list-item-content>
-              <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"></v-parallax>
             </v-list-item>
-            <v-divider
-                inset
-                class="ma-6"
-                :key="userList.id"
-            ></v-divider>
           </template>
         </v-list>
       </v-card>
@@ -234,7 +235,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data () {
@@ -255,6 +256,7 @@ export default {
         v => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
       showEditInput: false,
+      search: '',
     }
   },
   methods: {
@@ -279,13 +281,13 @@ export default {
     saveUser () {
 
     },
-    deleteUser (deletedUser) {
-      this.filteredUsersList = this.filteredUsersList.filter((filteredUser) => {filteredUser !== deletedUser})
+    deleteUser (id) {
+      // this.filteredUsersList = this.filteredUsersList.filter((filteredUser) => {filteredUser !== deletedUser})
+      this.filteredUsersList.splice(id, 1)
     },
   },
   computed: {
-    ...mapState(['search']),
-    ...mapGetters(['usersList', 'search']),
+    ...mapGetters(['usersList']),
     filteredUsersList () {
       let searchToLowerCase = this.search.toLowerCase()
       return this.usersList.filter(userList => {
@@ -296,27 +298,30 @@ export default {
         // || userList.website.toLowerCase().indexOf(searchToLowerCase) > -1
       })
     },
-    filterName () {
-      return this.usersList.slice(0, 1).map((obj) => {
-        for (const key in obj) {
-          this.items.push(key)
-        }
-      })
-    },
+    /*    filterName () {
+     return this.usersList.slice(0, 1).map((obj) => {
+     for (const key in obj) {
+     this.items.push(key)
+     }
+     })
+     },*/
     // eslint-disable-next-line vue/no-dupe-keys
-    firstnameL: {
-      get () {
-        return this.$store.state.firstname
-      },
-      set (value) {
-        this.$store.commit('', value)
-      }
-    },
+    // search: {
+    //   get () {
+    //     return this.search
+    //   },
+    //   set (value) {
+    //     this.$store.commit('', value)
+    //   }
+    // },
   },
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.v-list-item__title {
+  flex: auto;
+  align-self: start;
+}
 </style>
 

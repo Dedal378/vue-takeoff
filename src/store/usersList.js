@@ -1,11 +1,7 @@
-// import * as fb from 'firebase';
-// import { stack } from "vuetify/src/components/VCalendar/modes/stack";
-
 export default {
   state: {
     usersList: null,
     model: '',
-    search: '',
   },
   mutations: {
     SET_USERS_LIST (state, payload) {
@@ -14,6 +10,9 @@ export default {
     ADD_USERS_LIST (state, payload) {
       state.usersList.push(payload);
     },
+    // SET_ (state, payload) {
+    //   state.usersList = payload;
+    // },
   },
   actions: {
     async fetchUsersList ({ commit }) {
@@ -42,13 +41,5 @@ export default {
   },
   getters: {
     usersList: state => state.usersList,
-    search: state => state.search,
-    filteredUsersList (state) {
-      let searchToLowerCase = state.search.toLowerCase()
-      return state.usersList.filter(userList => {
-        return userList.name.toLowerCase().indexOf(searchToLowerCase) > -1
-          || userList.email.toLowerCase().indexOf(searchToLowerCase) > -1
-      })
-    },
   },
 }
