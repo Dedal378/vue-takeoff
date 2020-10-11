@@ -10,9 +10,9 @@ export default {
     ADD_USERS_LIST (state, payload) {
       state.usersList.push(payload);
     },
-    // SET_ (state, payload) {
-    //   state.usersList = payload;
-    // },
+    SET_DELETE_USER (state, payload) {
+      state.usersList.splice(payload, 1)
+    },
   },
   actions: {
     async fetchUsersList ({ commit }) {
@@ -37,6 +37,9 @@ export default {
         commit('SET_ERROR', error.message);
         throw error
       }
+    },
+    setDeleteUser ({ commit }, payload) {
+      commit('SET_DELETE_USER', payload)
     },
   },
   getters: {

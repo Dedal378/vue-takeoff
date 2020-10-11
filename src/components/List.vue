@@ -184,7 +184,7 @@
                   <v-btn
                       tile
                       color="error"
-                      @click="deleteUser"
+                      @click="deleteUser()"
                   >
                     <v-icon left>
                       mdi-delete-off-outline
@@ -260,7 +260,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addUserInList']),
+    ...mapActions(['addUserInList', 'setDeleteUser']),
     submit () {
       if (this.$refs.formAddUser.validate()) {
         const addUser = {
@@ -281,9 +281,8 @@ export default {
     saveUser () {
 
     },
-    deleteUser (id) {
-      // this.filteredUsersList = this.filteredUsersList.filter((filteredUser) => {filteredUser !== deletedUser})
-      this.filteredUsersList.splice(id, 1)
+    deleteUser () {
+      this.setDeleteUser()
     },
   },
   computed: {
