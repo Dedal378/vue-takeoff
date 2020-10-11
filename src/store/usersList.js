@@ -44,5 +44,6 @@ export default {
   },
   getters: {
     usersList: state => state.usersList,
+    userById: state => userId => state.usersList.find(user => user.id === userId),
   },
 }

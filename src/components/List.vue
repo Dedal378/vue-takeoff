@@ -111,133 +111,116 @@
       </v-form>
 
       <v-card
+          v-for="userList of filteredUsersList"
+          :key="userList.id"
           :elevation="7"
           class="pa-12 ma-10"
       >
-        <v-list three-line>
-          <template
-              v-for="userList of filteredUsersList"
+        <v-parallax
+            src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+        >
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-subtitle class="font-weight-bold text-h5 mb-2">id: {{ userList.id }}</v-list-item-subtitle>
+              <v-list-item-title class="font-weight-bold text-h4" v-html="userList.name"></v-list-item-title>
+              <v-list-item-subtitle class="font-weight-medium mb-2" v-html="userList.email"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium mb-2">Address</v-list-item-title>
+              <v-list-item-subtitle v-html="userList.address.zipcode"></v-list-item-subtitle>
+              <v-list-item-subtitle v-html="userList.address.city"></v-list-item-subtitle>
+              <v-list-item-subtitle v-html="userList.address.street"></v-list-item-subtitle>
+              <v-list-item-subtitle v-html="userList.address.suite"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium mb-2">Geo</v-list-item-title>
+              <v-list-item-subtitle v-html="userList.address.geo.lat"></v-list-item-subtitle>
+              <v-list-item-subtitle v-html="userList.address.geo.lng"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium mb-2">Phone</v-list-item-title>
+              <v-list-item-subtitle v-html="userList.phone"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium mb-2">Website</v-list-item-title>
+              <v-list-item-subtitle>
+                <a href="#" target="_blank">{{ userList.website }}</a>
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title class="font-weight-medium mb-2">Company</v-list-item-title>
+              <v-list-item-subtitle v-html="userList.company.name"></v-list-item-subtitle>
+              <v-list-item-subtitle v-html="userList.company.catchPhrase"></v-list-item-subtitle>
+              <v-list-item-subtitle v-html="userList.company.bs"></v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-parallax>
+        <v-col>
+          <Edit
+              :user="userById"
+          ></Edit>
+
+          <v-btn
+              tile
+              color="error"
+              @click="deleteUser"
           >
-            <v-list-item
-                :key="userList.id"
-                class="pa-6 ma-3 elevation-5"
-            >
-              <v-list-item-content
-              >
-                <v-parallax src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
-                  <v-list-item-title class="font-weight-bold text-h4 mt-16 py-12" v-html="userList.name"></v-list-item-title>
-                  <v-list-item-subtitle class="font-weight-medium mb-2" v-html="userList.email"></v-list-item-subtitle>
-                <!--                <v-list-item-content>
-                                  <v-list-item-title class="font-weight-medium mb-2">Address</v-list-item-title>
-                                  <v-list-item-subtitle v-html="userList.address.zipcode"></v-list-item-subtitle>
-                                  <v-list-item-subtitle v-html="userList.address.city"></v-list-item-subtitle>
-                                  <v-list-item-subtitle v-html="userList.address.street"></v-list-item-subtitle>
-                                  <v-list-item-subtitle v-html="userList.address.suite"></v-list-item-subtitle>
-                                </v-list-item-content>
-                                <v-list-item-content>
-                                  <v-list-item-title class="font-weight-medium mb-2">Geo</v-list-item-title>
-                                  <v-list-item-subtitle v-html="userList.address.geo.lat"></v-list-item-subtitle>
-                                  <v-list-item-subtitle v-html="userList.address.geo.lng"></v-list-item-subtitle>
-                                </v-list-item-content>
-                                <v-list-item-content>
-                                  <v-list-item-title class="font-weight-medium mb-2">Phone</v-list-item-title>
-                                  <v-list-item-subtitle v-html="userList.phone"></v-list-item-subtitle>
-                                </v-list-item-content>
-                                <v-list-item-content>
-                                  <v-list-item-title class="font-weight-medium mb-2">Website</v-list-item-title>
-                                  <v-list-item-subtitle>
-                                    <a href="#" target="_blank">{{ userList.website }}</a>
-                                  </v-list-item-subtitle>
-                                </v-list-item-content>
-                                <v-list-item-content>
-                                  <v-list-item-title class="font-weight-medium mb-2">Company</v-list-item-title>
-                                  <v-list-item-subtitle v-html="userList.company.name"></v-list-item-subtitle>
-                                  <v-list-item-subtitle v-html="userList.company.catchPhrase"></v-list-item-subtitle>
-                                  <v-list-item-subtitle v-html="userList.company.bs"></v-list-item-subtitle>
-                                </v-list-item-content>-->
-                </v-parallax>
-                <v-col>
-                  <v-btn
-                      tile
-                      color="success"
-                      class="mr-3"
-                      @click="editUser"
-                  >
-                    <v-icon left>
-                      mdi-pencil
-                    </v-icon>
-                    Edit
-                  </v-btn>
+            <v-icon left>
+              mdi-delete-off-outline
+            </v-icon>
+            Delete
+          </v-btn>
+        </v-col>
 
-                  <v-btn
-                      tile
-                      color="warning"
-                      class="mr-3"
-                      @click="saveUser"
-                  >
-                    <v-icon left>
-                      mdi-file-check-outline
-                    </v-icon>
-                    Save
-                  </v-btn>
-
-                  <v-btn
-                      tile
-                      color="error"
-                      @click="deleteUser()"
-                  >
-                    <v-icon left>
-                      mdi-delete-off-outline
-                    </v-icon>
-                    Delete
-                  </v-btn>
-
-                </v-col>
-                <!--<v-col
-                    class="mt-5"
-                >
-                  <v-text-field
-                      v-if="showEditInput"
-                      v-model="firstname"
-                      :rules="nameRules"
-                      label="Firstname"
-                      solo-inverted
-                      required
-                  ></v-text-field>
-                  <v-text-field
-                      v-if="showEditInput"
-                      v-model="lastname"
-                      :rules="nameRules"
-                      label="Lastname"
-                      solo-inverted
-                      required
-                  ></v-text-field>
-                  <v-text-field
-                      v-if="showEditInput"
-                      v-model="email"
-                      :rules="emailRules"
-                      label="E-mail"
-                      solo-inverted
-                      required
-                  ></v-text-field>
-                </v-col>-->
-                <v-divider
-                    inset
-                    class="ma-6"
-                ></v-divider>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </v-list>
+        <v-col
+            v-if="showEditInput"
+            class="mt-5"
+        >
+          <v-text-field
+              v-model="firstname"
+              :rules="nameRules"
+              label="Firstname"
+              solo-inverted
+              required
+          ></v-text-field>
+          <v-text-field
+              v-model="lastname"
+              :rules="nameRules"
+              label="Lastname"
+              solo-inverted
+              required
+          ></v-text-field>
+          <v-text-field
+              v-model="email"
+              :rules="emailRules"
+              label="E-mail"
+              solo-inverted
+              required
+          ></v-text-field>
+        </v-col>
       </v-card>
     </v-container>
   </v-main>
 </template>
 
 <script>
+
+import Edit from "@/components/Edit";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
+  components: { Edit },
+  props: ['id'],
   data () {
     return {
       filter: '',
@@ -264,8 +247,26 @@ export default {
     submit () {
       if (this.$refs.formAddUser.validate()) {
         const addUser = {
+          id: this.usersList.length + 1,
           name: `${ this.firstname }  ${ this.lastname }`,
           email: this.email,
+          address: {
+            zipcode: '350000',
+            city: 'Krasnodar',
+            street: 'Krasnaya',
+            suite: '12',
+            geo: {
+              lat: '123412341234',
+              lng: '123412341234',
+            }
+          },
+          phone: '+7 918 123 45 67',
+          website: 'website.ru',
+          company: {
+            name: "Romaguera-Crona",
+            catchPhrase: "Multi-layered client-server neural-net",
+            bs: "harness real-time e-markets",
+          },
         };
         this.addUserInList(addUser)
 
@@ -274,19 +275,12 @@ export default {
         this.email = ''
       }
     },
-    editUser () {
-      this.showEditInput = !this.showEditInput
-
-    },
-    saveUser () {
-
-    },
     deleteUser () {
       this.setDeleteUser()
     },
   },
   computed: {
-    ...mapGetters(['usersList']),
+    ...mapGetters(['usersList', 'userById']),
     filteredUsersList () {
       let searchToLowerCase = this.search.toLowerCase()
       return this.usersList.filter(userList => {
@@ -296,6 +290,10 @@ export default {
         // || userList.address.city.toLowerCase().indexOf(searchToLowerCase) > -1
         // || userList.website.toLowerCase().indexOf(searchToLowerCase) > -1
       })
+    },
+    userById () {
+      const id = this.id
+      return this.$store.getters.userById(id)
     },
     /*    filterName () {
      return this.usersList.slice(0, 1).map((obj) => {
@@ -317,10 +315,18 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.v-list-item__title {
+<style lang="scss">
+.v-list-item {
   flex: auto;
-  align-self: start;
+
+  &__title {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+.v-parallax__content {
+  flex-wrap: wrap;
 }
 </style>
 
