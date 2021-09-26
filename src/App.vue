@@ -15,7 +15,10 @@
             <v-icon>{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="link.title" />
+            <v-list-item-title
+                class="text--black"
+                v-text="link.title"
+            />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -27,7 +30,10 @@
           <v-icon>mdi-exit-to-app</v-icon>
         </v-list-item-action>
         <v-list-item-content>
-          <v-list-item-title v-text="'Logout'" />
+          <v-list-item-title
+              class="text--black"
+              v-text="'Logout'"
+          />
         </v-list-item-content>
       </v-list-item>
     </v-navigation-drawer>
@@ -143,5 +149,10 @@ export default {
 <style lang="scss">
 .pointer {
   cursor: pointer;
+}
+
+.text--black {
+  color: #000000 !important;
+  font-size: 1rem !important;
 }
 </style>
